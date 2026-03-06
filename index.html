@@ -1362,6 +1362,141 @@ body.keyboard-focus button:focus { box-shadow: 0 0 0 4px rgba(0,160,90,.25) !imp
   .cursor-dot, .cursor-ring { display: none; }
   body { cursor: auto; }
 }
+
+/* ════════════════════════════════════════════
+   MOBILE OVERHAUL — 480px and below
+   ════════════════════════════════════════════ */
+
+/* Bottom nav */
+#mobile-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 9000;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  padding: .5rem .5rem calc(.5rem + env(safe-area-inset-bottom));
+  display: none;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  box-shadow: 0 -4px 24px rgba(17,16,8,.08);
+}
+.mob-nav-btn {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .18rem; padding: .4rem .2rem;
+  background: none; border: none; cursor: pointer;
+  color: var(--muted); transition: color .15s;
+  font-family: var(--font-mono); font-size: .48rem;
+  letter-spacing: .06em; font-weight: 600;
+  -webkit-tap-highlight-color: transparent;
+}
+.mob-nav-btn.active { color: var(--green); }
+.mob-nav-btn svg { width: 20px; height: 20px; }
+.mob-nav-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--green); opacity: 0;
+  transition: opacity .15s;
+}
+.mob-nav-btn.active .mob-nav-dot { opacity: 1; }
+
+@media (max-width: 480px) {
+  /* Show bottom nav, hide desktop nav links */
+  #mobile-nav { display: grid; }
+  nav { padding: .65rem 1rem; }
+  nav .nav-links { display: none !important; }
+  
+  /* Add padding so content isn't hidden behind bottom nav */
+  body { padding-bottom: 70px; }
+
+  /* Hero */
+  .hero { padding: 1.5rem 1rem 2rem !important; gap: 1.5rem; }
+  h1 { font-size: clamp(3rem, 16vw, 5rem) !important; }
+  .hero-sub { font-size: .82rem !important; }
+  .hero-stats { grid-template-columns: 1fr 1fr !important; gap: .6rem !important; }
+  .stat-card { padding: .9rem !important; }
+  .stat-num { font-size: 1.6rem !important; }
+  .hero-btns { gap: .5rem !important; }
+  .btn-primary, .btn-secondary { padding: .7rem 1.2rem !important; font-size: .8rem !important; width: 100%; text-align: center; }
+
+  /* Section padding */
+  .section { padding: 2.5rem 1rem !important; }
+  .section-divider { margin: 0 1rem !important; }
+
+  /* Commute card */
+  #commute-bar { padding: .6rem 1rem 0 !important; }
+  .commute-card { flex-wrap: wrap; gap: .8rem; padding: .9rem 1rem; }
+  .commute-actions { width: 100%; justify-content: flex-end; }
+  #commute-setup-strip { padding: .5rem 1rem 0 !important; }
+
+  /* Status widget */
+  .status-widget { padding: .5rem 1rem !important; gap: .35rem !important; }
+
+  /* Trip planner */
+  .dest-picker-wrap { gap: 1rem !important; }
+  .dest-card { padding: 1.2rem 1rem !important; }
+  .dest-modes { gap: .35rem !important; flex-wrap: wrap; }
+  .dest-mode-btn { font-size: .7rem !important; padding: .35rem .6rem !important; }
+  .dest-time-tabs { flex-wrap: wrap; gap: .3rem; }
+  .dest-time-tab { font-size: .7rem !important; padding: .35rem .7rem !important; }
+  .dest-results { padding: 1rem !important; }
+  .dest-results-header { flex-direction: column !important; align-items: flex-start !important; gap: .6rem; }
+
+  /* Timetable */
+  .tt-wrap { grid-template-columns: 1fr !important; gap: 1.2rem !important; }
+  .tt-info-card { padding: 1.2rem !important; }
+  .tt-table { font-size: .72rem !important; }
+  .tt-table td { padding: .5rem .4rem !important; }
+
+  /* Network */
+  .network-grid { grid-template-columns: 1fr 1fr !important; gap: .6rem !important; }
+  .line-card { padding: .8rem !important; }
+
+  /* Roads */
+  .roads-grid { grid-template-columns: 1fr !important; }
+
+  /* Accessibility */
+  .af-toggles-grid { grid-template-columns: 1fr !important; }
+  .af-card-wide, .af-card-full { grid-column: span 1 !important; }
+  .af-toggle-card[data-feature="multilang"],
+  .af-toggle-card[data-feature="dyslexia"] { grid-column: span 1 !important; }
+  .af-toggle-card { padding: .9rem 1rem !important; }
+
+  /* Alerts */
+  .alerts-grid { grid-template-columns: 1fr !important; }
+
+  /* Saved trips & nearby */
+  .saved-trip-item { flex-wrap: wrap; gap: .5rem; }
+  .saved-trip-actions { margin-left: auto; }
+
+  /* Footer */
+  footer { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+  .foot-copy { grid-column: span 1 !important; }
+  .cta-section { margin: 0 1rem 2rem !important; padding: 3rem 1.2rem !important; }
+
+  /* Modals */
+  .commute-modal-box { padding: 1.5rem 1.2rem !important; }
+  #lang-modal-box { padding: 1.5rem 1.2rem !important; }
+
+  /* Access preview */
+  #access-preview { padding: 1.2rem !important; }
+
+  /* Two-col fix */
+  .two-col { grid-template-columns: 1fr !important; }
+  .mode-wrap { grid-template-columns: 1fr !important; }
+  .access-intro { grid-template-columns: 1fr !important; }
+
+  /* Journey timeline */
+  .jtl-track { padding: 0 .5rem !important; }
+
+  /* Ticker */
+  .ticker { padding: .45rem 0 !important; }
+}
+
+@media (max-width: 360px) {
+  h1 { font-size: 3rem !important; }
+  .section { padding: 2rem .8rem !important; }
+  .hero { padding: 1.2rem .8rem !important; }
+  .dest-card { padding: 1rem .8rem !important; }
+}
 </style>
 </head>
 <body>
@@ -5853,6 +5988,29 @@ renderSavedTrips();
     }
   })();
 
+
+  // ── MOBILE BOTTOM NAV ──
+  function mobNav(sectionId, btn) {
+    document.querySelectorAll('.mob-nav-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Highlight active nav btn on scroll
+  if (window.innerWidth <= 480) {
+    const mobSections = ['destination-picker','timetable','alerts','roads','access'];
+    const mobBtns = document.querySelectorAll('.mob-nav-btn');
+    window.addEventListener('scroll', () => {
+      let current = 0;
+      mobSections.forEach((id, i) => {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top < window.innerHeight * .4) current = i;
+      });
+      mobBtns.forEach((b, i) => b.classList.toggle('active', i === current));
+    }, { passive: true });
+  }
+
   // ── KEYBOARD SHORTCUTS ──
   document.addEventListener('keydown', function(e) {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
@@ -5883,5 +6041,35 @@ renderSavedTrips();
   }, 2800);
 
 </script>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav id="mobile-nav" aria-label="Mobile navigation">
+  <button class="mob-nav-btn active" onclick="mobNav('destination-picker', this)" aria-label="Trip Planner">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+    <span>PLAN</span>
+    <div class="mob-nav-dot"></div>
+  </button>
+  <button class="mob-nav-btn" onclick="mobNav('timetable', this)" aria-label="Timetable">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span>TIMES</span>
+    <div class="mob-nav-dot"></div>
+  </button>
+  <button class="mob-nav-btn" onclick="mobNav('alerts', this)" aria-label="Alerts">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+    <span>ALERTS</span>
+    <div class="mob-nav-dot"></div>
+  </button>
+  <button class="mob-nav-btn" onclick="mobNav('roads', this)" aria-label="Roads">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l4-10 5 6 3-4 6 8"/></svg>
+    <span>ROADS</span>
+    <div class="mob-nav-dot"></div>
+  </button>
+  <button class="mob-nav-btn" onclick="mobNav('access', this)" aria-label="Accessibility">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="1.5"/><path d="M9 12l-2 7M15 12l2 7M9 12h6M12 12v-3"/></svg>
+    <span>ACCESS</span>
+    <div class="mob-nav-dot"></div>
+  </button>
+</nav>
+
 </body>
 </html>
