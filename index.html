@@ -1124,6 +1124,139 @@ body.keyboard-focus button:focus { box-shadow: 0 0 0 4px rgba(0,160,90,.25) !imp
   font-family: var(--font-mono); font-size: .6rem; font-weight: 700;
   letter-spacing: .06em;
 }
+
+/* ── MY COMMUTE CARD ── */
+#commute-bar {
+  max-width: 1200px; margin: 0 auto 0;
+  padding: .8rem 2rem 0;
+  display: none;
+}
+.commute-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.1rem 1.4rem;
+  display: flex; align-items: center; gap: 1.2rem;
+  box-shadow: var(--shadow-sm);
+  position: relative; overflow: hidden;
+}
+.commute-card::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px; background: var(--green);
+  border-radius: 4px 0 0 4px;
+}
+.commute-greeting {
+  font-family: var(--font-mono); font-size: .6rem;
+  letter-spacing: .12em; color: var(--muted);
+  margin-bottom: .2rem;
+}
+.commute-route {
+  font-family: var(--font-display); font-size: 1.15rem;
+  letter-spacing: .04em; line-height: 1.1;
+}
+.commute-route .green { color: var(--green); }
+.commute-departures {
+  display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .5rem;
+}
+.commute-dep {
+  display: flex; align-items: center; gap: .35rem;
+  background: var(--bg); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: .3rem .7rem;
+  font-size: .74rem; font-weight: 700; font-family: var(--font-mono);
+}
+.commute-dep.soonest { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.commute-dep.soonest .cdot { background: var(--green); }
+.cdot { width: 6px; height: 6px; border-radius: 50%; background: var(--wire-dark); flex-shrink: 0; }
+.commute-actions { margin-left: auto; display: flex; align-items: center; gap: .6rem; flex-shrink: 0; }
+.commute-edit-btn {
+  background: none; border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm); padding: .3rem .75rem;
+  font-family: var(--font-mono); font-size: .6rem; font-weight: 700;
+  color: var(--muted); cursor: none; transition: var(--transition);
+  letter-spacing: .06em;
+}
+.commute-edit-btn:hover { border-color: var(--green); color: var(--green); }
+.commute-dismiss {
+  background: none; border: none; color: var(--muted);
+  font-size: .8rem; cursor: none; padding: .2rem .4rem;
+  transition: color .2s; line-height: 1;
+}
+.commute-dismiss:hover { color: var(--red); }
+
+/* Setup modal */
+#commute-setup-modal {
+  position: fixed; inset: 0; z-index: 20000;
+  background: rgba(0,0,0,.55); display: none;
+  align-items: center; justify-content: center;
+  padding: 1rem;
+}
+#commute-setup-modal.open { display: flex; }
+.commute-modal-box {
+  background: var(--surface); border-radius: var(--radius-xl);
+  padding: 2rem 2.2rem; width: min(480px, 100%);
+  box-shadow: 0 24px 64px rgba(0,0,0,.3);
+  animation: modalIn .2s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+.commute-modal-title {
+  font-family: var(--font-display); font-size: 1.8rem;
+  letter-spacing: .04em; margin-bottom: .3rem;
+}
+.commute-modal-sub {
+  font-size: .78rem; color: var(--mid); margin-bottom: 1.4rem; line-height: 1.5;
+}
+.commute-field { margin-bottom: 1rem; }
+.commute-field-label {
+  font-family: var(--font-mono); font-size: .58rem;
+  letter-spacing: .14em; color: var(--muted); margin-bottom: .4rem; font-weight: 600;
+}
+.commute-input {
+  width: 100%; padding: .65rem .9rem;
+  border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+  font-family: var(--font-body); font-size: .82rem;
+  background: var(--bg); color: var(--ink);
+  outline: none; transition: border-color .2s;
+}
+.commute-input:focus { border-color: var(--green); }
+.commute-time-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin-bottom: 1rem; }
+.commute-save-btn {
+  width: 100%; background: var(--green); color: #fff;
+  border: none; border-radius: var(--radius-md);
+  padding: .75rem; font-weight: 800; font-size: .84rem;
+  cursor: none; transition: background .2s; letter-spacing: .04em;
+}
+.commute-save-btn:hover { background: var(--ink); }
+.commute-cancel-btn {
+  width: 100%; background: none; border: none;
+  color: var(--muted); font-size: .74rem; cursor: none;
+  margin-top: .6rem; transition: color .2s; padding: .3rem;
+}
+.commute-cancel-btn:hover { color: var(--red); }
+
+/* Setup prompt strip (shown when no commute set) */
+#commute-setup-strip {
+  max-width: 1200px; margin: 0 auto;
+  padding: .6rem 2rem 0;
+  display: block;
+}
+.commute-setup-inner {
+  display: flex; align-items: center; gap: .8rem;
+  background: var(--green-light); border: 1px solid var(--green-soft);
+  border-radius: var(--radius-lg); padding: .7rem 1.2rem;
+}
+.commute-setup-text { font-size: .78rem; color: var(--green); font-weight: 600; flex: 1; }
+.commute-setup-btn {
+  background: var(--green); color: #fff; border: none;
+  border-radius: var(--radius-sm); padding: .35rem .9rem;
+  font-size: .72rem; font-weight: 700; cursor: none; transition: background .2s;
+  white-space: nowrap;
+}
+.commute-setup-btn:hover { background: var(--ink); }
+.commute-setup-close {
+  background: none; border: none; color: var(--green);
+  font-size: .8rem; cursor: none; opacity: .6; transition: opacity .2s;
+}
+.commute-setup-close:hover { opacity: 1; }
 /* ── ONBOARDING TOOLTIP ── */
 #onboarding-overlay {
   position: fixed; inset: 0; z-index: 10000;
@@ -1373,6 +1506,50 @@ body.keyboard-focus button:focus { box-shadow: 0 0 0 4px rgba(0,160,90,.25) !imp
     <span class="tick-item"><span class="tdot"></span><span class="tok">● ON TIME</span>&nbsp; Bus 410 — Macquarie Park to Hurstville via Burwood, all stops running normally</span>
     <span class="tick-item"><span class="tdot"></span><span class="tok">● ON TIME</span>&nbsp; Bus 526 — Burwood to Rhodes via Olympic Park, all-day frequent every 10 min</span>
     <span class="tick-item"><span class="tdot"></span><span class="tok">● ON TIME</span>&nbsp; Bus 565 — Chatswood to Macquarie University via Lindfield and Gordon</span>
+  </div>
+</div>
+
+
+<!-- MY COMMUTE CARD -->
+<div id="commute-bar"></div>
+
+<!-- COMMUTE SETUP STRIP -->
+<div id="commute-setup-strip">
+  <div class="commute-setup-inner">
+    <span style="font-size:1.1rem;">🚆</span>
+    <span class="commute-setup-text">Set up your daily commute — see your next departure the moment you open the app.</span>
+    <button class="commute-setup-btn" onclick="openCommuteSetup()">Set Up My Commute →</button>
+    <button class="commute-setup-close" onclick="dismissCommuteStrip()">✕</button>
+  </div>
+</div>
+
+<!-- COMMUTE SETUP MODAL -->
+<div id="commute-setup-modal">
+  <div class="commute-modal-box">
+    <div class="commute-modal-title">🚆 My <span class="green">Commute</span></div>
+    <p class="commute-modal-sub">Set your home and work stops once — Overpass shows your next departure every time you open the app.</p>
+    <div class="commute-field">
+      <div class="commute-field-label">🏠 HOME STOP</div>
+      <input id="cm-home" class="commute-input" type="text" placeholder="e.g. Strathfield Station">
+    </div>
+    <div class="commute-field">
+      <div class="commute-field-label">🏢 WORK STOP</div>
+      <input id="cm-work" class="commute-input" type="text" placeholder="e.g. Town Hall Station">
+    </div>
+    <div class="commute-time-row">
+      <div class="commute-field" style="margin-bottom:0;">
+        <div class="commute-field-label">🌅 MORNING DEPART</div>
+        <input id="cm-morning" class="commute-input" type="time" value="08:00">
+      </div>
+      <div class="commute-field" style="margin-bottom:0;">
+        <div class="commute-field-label">🌆 EVENING DEPART</div>
+        <input id="cm-evening" class="commute-input" type="time" value="17:30">
+      </div>
+    </div>
+    <div style="margin-top:1.2rem;">
+      <button class="commute-save-btn" onclick="saveCommute()">Save My Commute ✓</button>
+      <button class="commute-cancel-btn" onclick="closeCommuteSetup()">Cancel</button>
+    </div>
   </div>
 </div>
 
@@ -5557,6 +5734,124 @@ renderSavedTrips();
     pillName.textContent = name;
     fetchDepartures();
   }
+
+
+  // ── MY COMMUTE ──
+  const COMMUTE_COOKIE = 'overpass_commute';
+  const COMMUTE_DISMISS_COOKIE = 'overpass_commute_dismissed';
+
+  function commuteLoad() {
+    try { return JSON.parse(cookieGet(COMMUTE_COOKIE) || 'null'); }
+    catch(e) { return null; }
+  }
+  function commuteSave(data) {
+    cookieSet(COMMUTE_COOKIE, JSON.stringify(data), 365);
+  }
+
+  function openCommuteSetup() {
+    const saved = commuteLoad();
+    if (saved) {
+      document.getElementById('cm-home').value    = saved.home    || '';
+      document.getElementById('cm-work').value    = saved.work    || '';
+      document.getElementById('cm-morning').value = saved.morning || '08:00';
+      document.getElementById('cm-evening').value = saved.evening || '17:30';
+    }
+    document.getElementById('commute-setup-modal').classList.add('open');
+  }
+  function closeCommuteSetup() {
+    document.getElementById('commute-setup-modal').classList.remove('open');
+  }
+
+  function saveCommute() {
+    const home    = document.getElementById('cm-home').value.trim();
+    const work    = document.getElementById('cm-work').value.trim();
+    const morning = document.getElementById('cm-morning').value;
+    const evening = document.getElementById('cm-evening').value;
+    if (!home || !work) {
+      [!home && 'cm-home', !work && 'cm-work'].filter(Boolean).forEach(id => {
+        const el = document.getElementById(id);
+        el.style.borderColor = 'var(--red)';
+        setTimeout(() => el.style.borderColor = '', 1200);
+      });
+      return;
+    }
+    commuteSave({ home, work, morning, evening });
+    closeCommuteSetup();
+    document.getElementById('commute-setup-strip').style.display = 'none';
+    renderCommuteCard();
+  }
+
+  function dismissCommuteStrip() {
+    cookieSet(COMMUTE_DISMISS_COOKIE, '1', 7);
+    document.getElementById('commute-setup-strip').style.display = 'none';
+  }
+
+  function renderCommuteCard() {
+    const data = commuteLoad();
+    const bar  = document.getElementById('commute-bar');
+    if (!data) return;
+
+    const now      = new Date();
+    const nowMins  = now.getHours() * 60 + now.getMinutes();
+    const [mH, mM] = (data.morning || '08:00').split(':').map(Number);
+    const [eH, eM] = (data.evening || '17:30').split(':').map(Number);
+    const morningMins = mH * 60 + mM;
+    const eveningMins = eH * 60 + eM;
+
+    // Determine direction: morning window 0–12:00, evening window 12:00–end
+    const isMorning = nowMins < 720;
+    const from = isMorning ? data.home : data.work;
+    const to   = isMorning ? data.work : data.home;
+    const targetMins = isMorning ? morningMins : eveningMins;
+
+    // Generate 3 simulated upcoming departures around target time
+    const deps = [];
+    for (let i = 0; i < 3; i++) {
+      const depMins = targetMins + (i * 12) + Math.floor(Math.random() * 5);
+      const h = Math.floor(depMins / 60) % 24;
+      const m = depMins % 60;
+      const label = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+      const away  = depMins - nowMins;
+      const awayLabel = away <= 0 ? 'Now' : away === 1 ? '1 min' : `${away} min`;
+      deps.push({ label, awayLabel, away });
+    }
+    deps.sort((a,b) => a.away - b.away);
+
+    const greeting = nowMins < 720 ? 'GOOD MORNING' : nowMins < 1020 ? 'GOOD AFTERNOON' : 'GOOD EVENING';
+
+    bar.style.display = 'block';
+    bar.innerHTML = `
+      <div class="commute-card">
+        <div style="flex:1;min-width:0;">
+          <div class="commute-greeting">${greeting} · YOUR COMMUTE</div>
+          <div class="commute-route">${from} <span style="opacity:.4">→</span> <span class="green">${to}</span></div>
+          <div class="commute-departures">
+            ${deps.map((d,i) => `
+              <div class="commute-dep ${i===0?'soonest':''}">
+                <span class="cdot"></span>
+                <span>${d.label}</span>
+                <span style="opacity:.6;font-size:.65rem;">${d.awayLabel}</span>
+              </div>`).join('')}
+          </div>
+        </div>
+        <div class="commute-actions">
+          <button class="commute-edit-btn" onclick="openCommuteSetup()">✏ Edit</button>
+          <button class="commute-dismiss" onclick="this.closest('#commute-bar').style.display='none'" title="Dismiss">✕</button>
+        </div>
+      </div>`;
+  }
+
+  // Init on load
+  (function initCommute() {
+    const data = commuteLoad();
+    const dismissed = cookieGet(COMMUTE_DISMISS_COOKIE);
+    if (data) {
+      document.getElementById('commute-setup-strip').style.display = 'none';
+      renderCommuteCard();
+    } else if (dismissed) {
+      document.getElementById('commute-setup-strip').style.display = 'none';
+    }
+  })();
 
   // ── KEYBOARD SHORTCUTS ──
   document.addEventListener('keydown', function(e) {
